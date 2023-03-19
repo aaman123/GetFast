@@ -1,6 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import { View, FlatList, TouchableOpacity, Text, Image } from "react-native";
 import { Icon } from "react-native-elements";
+import { useSelector } from "react-redux";
+import { selectOrigin } from "../slices/NavSlice";
 
 const NavOptions = () => {
   const data = [
@@ -19,6 +21,7 @@ const NavOptions = () => {
   ];
 
   const navigation = useNavigation();
+  const origin = useSelector(selectOrigin);
 
   return (
     <View>
@@ -28,7 +31,10 @@ const NavOptions = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
-            className="m-2 bg-gray-200 p-2 w-40 pl-6 pt-4 pb-8"
+            className={`m-2 bg-gray-200 p-2 w-40 pl-6 pt-4 pb-8 ${
+              !origin && "opacity-20"
+            }`}
+            disabled={!origin}
             onPress={() => {
               navigation.navigate(item.screen);
             }}
